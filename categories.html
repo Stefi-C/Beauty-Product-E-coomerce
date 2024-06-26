@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>O Botique da Ieda - All products </title>
+
+    <!-- font awsome cdn link -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <!-- custom css file link -->
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+   <!-- header section start page -->
+
+<div id="header" class="header">
+    <a href="index.htlm" class="logo"><i class="fas fa-female"></i>O Boutique da Ieda</a>
+    <nav class="navbar">
+        <a href="index.html#home">Home</a> 
+        <a href="index.html#about">About Us</a> 
+        <a href="index.html#shop">Our Products</a>  
+        <a href="categories.html">Categories</a> 
+        <a href="index.html#gallery">Our Best</a> 
+        <a href="index.html#message">Contact Us</a>
+         
+    </nav>
+    
+    <div class="icons">
+        <div id="menu-btn" class="fas fa-bars"></div>
+        <a href="wishlist.html" class="fas fa-heart"></a>
+        <a href="#" class="fas fa-user"></a>
+        <a href="cart.html" class="icon-cart"><i class="fas fa-shopping-cart"></i></a>
+        <span id="cartItems" class="quantify">0</span>
+    </div>
+</div>
+    
+<!-- header section ends -->
+<div class="cart">
+    <h1>Shopping Cart</h1>
+    <div class="cart-dom">
+        
+    </div>
+    <div class="checkOut">
+        
+        <div class="closeShopping">Close</div>
+        <div class="total">0</div>
+    </div>
+</div>
+<!-- main categories starts -->
+<div class="main-categories">
+    <div class="categories-wrapper">
+        <div id="search-container">
+            <input type="search" id="search-input" placeholder="Search Product Name Here..">
+            <button id="search">Search</button>
+        </div>
+        <div id="buttons"> <!--Qui ci va il container list-->
+            <button class="button-value" onclick="filterProduct('all')">
+                <a href="#" class="box">
+                   <img src="/assets/collezione-di-cosmetici.webp">
+                   <h3>All Products</h3>
+               </a>
+           </button>
+        <button class="button-value" onclick="filterProduct('Skin-Care')">
+             <a href="#" class="box">
+                <img src="/assets/kosmetic.jpg">
+                <h3>Skin-Care</h3>
+            </a>
+        </button>
+        <button class="button-value" onclick="filterProduct('Wellness')">
+                <a href="#" class="box">
+                    <img src="/assets/wellness.jpg">
+                    <h3>Wellness</h3>
+                </a>
+        </button>
+        <button class="button-value" onclick="filterProduct('Hair-Treatment')">
+                <a href="#" class="box">
+                    <img src="/assets/hair.jpg">
+                    <h3>Hair-Treatment</h3>
+                </a>
+        </button>
+            <button class="button-value" onclick="filterProduct('Hands-Treatment')">
+                <a href="#" class="box">
+                    <img src="/assets/hands.jpg">
+                    <h3>Hands-Treatment</h3>
+                </a>
+            </button>
+            <button class="button-value" onclick="filterProduct('Fragrance')">
+                <a href="#" class="box">
+                    <img src="/assets/fragrance.jpg">
+                    <h3>Fragrance</h3>
+                </a>
+            </button>
+            <button class="button-value" onclick="filterProduct('Nails')">
+                <a href="#" class="box">
+                    <img src="/assets/Nails.jpg">
+                    <h3>Nails</h3>
+                </a>
+            </button>
+            <button class="button-value" onclick="filterProduct('Make-Up')">
+                <a href="#" class="box">
+                    <img src="/assets/makeup1.jpg">
+                    <h3>Make-Up</h3>
+                </a>
+            </button>
+        </div>
+        
+        <div id="products"></div>
+    </div>
+   
+</div>
+<!-- main categories ends -->
+
+
+<!-- custom js file link -->
+<script type="text/javascript" src="shopData.js"> </script>
+    <script type="text/javascript" src="script.js"> </script> 
+     
+
+
+
+</body>
+</html>
