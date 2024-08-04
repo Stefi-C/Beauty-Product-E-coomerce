@@ -1,4 +1,4 @@
-/*let basket = JSON.parse(localStorage.getItem('data')) || [];
+let basket = JSON.parse(localStorage.getItem('data')) || [];
 let label = document.getElementById('label');
 let finalCart = document.getElementById('final-cart');
 
@@ -139,4 +139,4 @@ let checkOut = () => {
 };
 
 generateCart();
-generateTotalBill();*/
+generateTotalBill();
