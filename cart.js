@@ -1,7 +1,11 @@
+"use strict";
+
+// Cart initialization
 let basket = JSON.parse(localStorage.getItem('data')) || [];
 let label = document.getElementById('label');
 let finalCart = document.getElementById('final-cart');
 
+// Function to calculate total items in the cart
 function itemCalculate() {
   let cartItem = document.getElementById("cartItems");
   let count = 0;
@@ -11,17 +15,17 @@ function itemCalculate() {
 
 itemCalculate();
 
+// Generate cart items in the DOM
 let generateCart = () => {
   if (basket.length !== 0) {
-    return finalCart.innerHTML = basket.map((x) => {
+    finalCart.innerHTML = basket.map((x) => {
       let { id, quantity } = x;
-      let search = data.find((x) => x.id === id) || [];
+      let search = data.find((x) => x.id === id) || {};
       let { img, price, name } = search;
       return `
           <div class="cart-item">
             <img width="90" src=${img} alt="" />
             <div class="details">
-            
               <div class="title-price-x">
                 <h4 class="title-price">
                   <p>${name}</p>
@@ -31,16 +35,15 @@ let generateCart = () => {
               </div>
               <div class="cart-buttons">
                 <div class="buttons">
-                  <i onclick="decrement(${id})" class="bi bi-dash-lg"></i>
+                  <i onclick="cartDecrement(${id})" class="bi bi-dash-lg"></i>
                   <div id=${id} class="quantity">${quantity}</div>
-                  <i onclick="increment(${id})" class="bi bi-plus-lg"></i>
+                  <i onclick="cartIncrement(${id})" class="bi bi-plus-lg"></i>
                 </div>
               </div>
               <h3>$${quantity * price}</h3>
-            
             </div>
           </div>
-          `
+          `;
     }).join('');
   } else {
     finalCart.innerHTML = "";
@@ -53,87 +56,76 @@ let generateCart = () => {
   }
 };
 
-// responsible for decreasing the data when user hits the + and - buttons
-let CartDecrement = (id) => {
-  let selectedItem = id;
-  let searchItem = basket.find((x) => x.id === selectedItem);
+// Decrement item quantity in the cart
+let cartDecrement = (id) => {
+  let searchItem = basket.find((x) => x.id === id);
 
-  // if there is no item in the cart or the value of the item is 0.
   if (searchItem === undefined || searchItem.quantity === 0) return;
   searchItem.quantity -= 1;
 
-  // Update the text content of the DOM element
-  document.getElementById(id).textContent = searchItem.quantity;
-  // this removes all the items from the cart whose quantity is 0. this happens when we remove all the picks of the chosen item.
-  basket = basket.filter((x) => x.quantity !== 0);
-  // if in the cart section the user remove all the quantity of the selected item, then it is responsible for removing the element from the cart section.
-  generateCart();
+  if (searchItem.quantity === 0) {
+    basket = basket.filter((x) => x.id !== id);
+  }
+
   localStorage.setItem("data", JSON.stringify(basket));
+  generateCart();
   itemCalculate();
   generateTotalBill();
 };
 
-// responsible for increasing the data when user hits the + and - buttons
+// Increment item quantity in the cart
 let cartIncrement = (id) => {
-  let selectedItem = id;
-  let searchItem = basket.find((x) => x.id === selectedItem);
+  let searchItem = basket.find((x) => x.id === id);
 
   if (searchItem === undefined) {
-    basket.push({
-      id: selectedItem,
-      quantity: 1
-    });
-    // we have to update it here. since for the very first addition of an item in the cart the searchItem is going to be undefined and the very last line of the fxn is going to throw an error for the very first click on each item cuz we trying to access .quantity of undefined object. But it works fine if we click the button twice.
-    searchItem = basket[basket.length - 1]; // Update searchItem to the newly pushed item
+    basket.push({ id, quantity: 1 });
+    searchItem = basket[basket.length - 1];
   } else {
     searchItem.quantity += 1;
   }
-  // this is to update the value of the item in the card every time the user hits the + button.
-  generateCart();
-  // Update the text content of the DOM element
-  document.getElementById(id).textContent = searchItem.quantity;
+
   localStorage.setItem("data", JSON.stringify(basket));
+  generateCart();
   itemCalculate();
   generateTotalBill();
 };
 
+// Remove item from the cart
 let removeItem = (id) => {
-  let selected = id;
-  basket = basket.filter((x) => x.id !== selected);
-  // resetting the local storage with the removed item from the basket.
+  basket = basket.filter((x) => x.id !== id);
   localStorage.setItem("data", JSON.stringify(basket));
-  // re-rendering the cart.
   generateCart();
-  generateTotalBill();
   itemCalculate();
+  generateTotalBill();
 };
 
+// Generate total bill
 let generateTotalBill = () => {
   if (basket.length !== 0) {
     let amount = basket.map((x) => {
       let { id, quantity } = x;
-      let itemCart = data.find((x) => x.id === id) || [];
+      let itemCart = data.find((x) => x.id === id) || {};
       return quantity * itemCart.price;
     }).reduce((x, y) => x + y, 0);
     label.innerHTML = `
         <h2>Total Bill: $${amount}</h2>
         <button onclick="checkOut()" class="check-out">CheckOut</button>
         <button onclick="clearCart()" class="clear-cart">Clear Cart</button>
-      `
-  }
-  else {
-    return;
+      `;
+  } else {
+    label.innerHTML = "";
   }
 };
 
+// Clear the cart
 let clearCart = () => {
   basket = [];
   localStorage.setItem("data", JSON.stringify(basket));
   generateCart();
-  // set the cart logo no to 0
   itemCalculate();
 };
 
+// Checkout function placeholder
 let checkOut = () => {
   console.log("checked out!");
 };
